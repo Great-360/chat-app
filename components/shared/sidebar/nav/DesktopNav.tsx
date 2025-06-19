@@ -8,6 +8,7 @@ import { Tooltip, TooltipContent } from "@radix-ui/react-tooltip";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme/theme-toggle";
+import { Badge } from "@/components/ui/badge";
 
 const DesktopNav = () => {
     const paths = useNavigation();
@@ -21,13 +22,19 @@ const DesktopNav = () => {
                         <Link  href={path.href}>
                           <Tooltip>
                             <TooltipTrigger asChild>
-                                <Button 
-                                  size="icon" 
-                                  variant={path.active ? "default" : "outline"}
-                                  >
-                                  {path.icon}
-                            
-                                </Button>
+                            <div className="relative">
+                               <Button
+                                 size="icon"
+                                 variant={path.active ? "default" : "outline"}
+                               >
+                                 {path.icon}
+                               </Button>
+                               {path.count ? (
+                                 <Badge className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 px-2 py-0.5 text-xs">
+                                   {path.count}
+                                 </Badge>
+                               ) : null}
+                             </div>
                             </TooltipTrigger>
                             <TooltipContent>
                                 <p>{path.name}</p>
