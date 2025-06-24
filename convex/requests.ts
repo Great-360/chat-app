@@ -3,7 +3,7 @@ import { query } from "./_generated/server"
 import {getUserByClerkId}  from "./_utils"
 
 export const get = query({args: {},
-handler: async (ctx, args) => {
+handler: async (ctx) => {
 const identity = await ctx.auth.getUserIdentity();
 
 if (!identity) {
@@ -32,7 +32,7 @@ const requestWithSender = await Promise.all(requests.map( async requests =>{
 })
 
 export const count = query({args: {},
-handler: async (ctx, args) => {
+handler: async (ctx) => {
 const identity = await ctx.auth.getUserIdentity();
 
 if (!identity) {

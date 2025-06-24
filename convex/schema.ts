@@ -28,7 +28,7 @@ export default defineSchema({
     conversations: defineTable({
         name: v.optional(v.string()),
         isGroup: v.boolean(),
-        lastMessage: v.optional(v.id("messages"))
+        lastMessageId: v.optional(v.id("messages"))
     }),
     conversationMembers: defineTable({
         memberId:v.id("users"),
@@ -40,9 +40,9 @@ export default defineSchema({
 
     messages: defineTable({
         senderId: v.id("users"),
-        convesationId: v.id("conversations"),
+        conversationId: v.id("conversations"),
         type: v.string(),
         content: v.array(v.string()),
-    }).index("by_conversationId",["convesationId"]),
+    }).index("by_conversationId",["conversationId"]),
 
 })

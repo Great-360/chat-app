@@ -1,11 +1,49 @@
-import React from 'react'
+"use client"
 
-const ConversationPage = () => {
-  return (
-    <div>
-      Conversation Page
-    </div>
-  )
+import ConversationContainer from '@/components/shared/conversation/ConversationContainer'
+import { useQuery } from 'convex/react'
+import { api } from '@/convex/_generated/api'
+import { Id } from '@/convex/_generated/dataModel'
+import { Loader2 } from 'lucide-react'
+import Header from '../[conversationId]/_components/Header'
+import Body from '../[conversationId]/_components/body/Body'
+import ChatInput from '../[conversationId]/_components/input/ChatInput'
+
+type  Props = {
+  params:{
+    type: string;
+  senderId: Id<"users">;
+  conversationId: Id<"conversations">; 
+  content: string[];
+  }
+}
+
+const ConversationPage = ({ params:{conversationId} }: Props) => {
+  const conversation = useQuery(api.conversation.get,{id: conversationId})
+    return (
+    conversation  ===  undefined 
+    ? (
+      <div className='w-full h-full flex items-center justify-center'>
+        <Loader2 className='h-8 w-8' />
+      </div>
+    )
+    :( conversation === null )
+    ? (
+      <p className='w-full h-full flex items-center justify-center'>
+       Conversation not found
+      </p>
+    ) 
+    : (
+      <ConversationContainer>
+        <Header 
+          name={(conversation.isGroup ? conversation.name : conversation.otherMember.username) || ""}
+          imageUrl={conversation.isGroup ? undefined : conversation.otherMember.imageUrl }
+          />
+        <Body />
+        <ChatInput />
+      </ConversationContainer>
+    )
+  );
 }
 
 export default ConversationPage
