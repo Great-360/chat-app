@@ -10,9 +10,11 @@ import Link from "next/link";
 type Props = {
     id: Id<"conversations">;
     imageUrl: string;
-    username: string
+    username: string;
+    lastMessageSender?: string;
+    lastMessageContent: string | undefined;
 }
-const DMConversationItem = ({ id,imageUrl,username } : Props) => {
+const DMConversationItem = ({ id,imageUrl,username, lastMessageSender, lastMessageContent } : Props) => {
     
   return (
     <Link href={`/conversations/${id}`} 
@@ -28,9 +30,19 @@ const DMConversationItem = ({ id,imageUrl,username } : Props) => {
            </Avatar>
            <div className="flex flex-col truncate">
                <h4 className="truncate">{username}</h4>
-               <p className="text-sm text-muted-foreground truncate">
-                 Start the conversation!
-               </p>
+              { lastMessageContent && lastMessageSender ?
+                <span className="text-sm text-muted-foreground flex truncate overflow-allipsis">
+                  <p className="font-semibold">
+                    {lastMessageSender}
+                    {":"}&nbsp;
+                  </p>
+                  <p className="truncate overflow-allipsis">
+                    {lastMessageContent}
+                  </p>
+                </span>
+              : <p className="text-sm text-muted-foreground truncate">
+                Start the conversation!
+               </p>}
            </div>
         </div>
     </Card>
