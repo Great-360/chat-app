@@ -28,7 +28,7 @@ export const get = query({
                      
     const conversation = await ctx.db.get(args.id);
     if(!conversation) {
-        throw new ConvexError("Conversation not found")
+        return null
 
     }
     const membership = await ctx.db.query("conversationMembers").
@@ -61,21 +61,26 @@ export const get = query({
     } else {
         const otherMembers = (await Promise.all(allConversationMemberships.filter(
             membership => membership.memberId !== currentUser._id
-        ))).map( async membership => {
-            const member = await ctx.db.get(membership.memberId)
+        ).map( async membership => {
+               const member = await ctx.db.get(membership.memberId)
+               if (!member) {
+                  throw new ConvexError("Member could not be found")
+               }
+             return {
+                 username: member.username,
+                 imageUrl: member.imageUrl,
+                 _id: member._id,
+             }
+         }
+         )
+             
+        ))
 
-            if (!member) {
-                throw new ConvexError("Member could not be found")
-            }
 
-            return {
-                username: member.username,
-            }
-        }
-        );
         return {
-            ...conversation, otherMembers,
-            othermember: null
+            ...conversation,
+             otherMembers,
+            otherMember: null
         }
     }
 },

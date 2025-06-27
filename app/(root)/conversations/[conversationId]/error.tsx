@@ -1,6 +1,6 @@
 "use client"
 import ConversationFallback from "@/components/shared/conversation/ConversationFallback";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Error ({error} : { error: Error}) {
@@ -13,4 +13,3 @@ export default function Error ({error} : { error: Error}) {
     <ConversationFallback />
   )
 }
-

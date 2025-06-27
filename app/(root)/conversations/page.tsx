@@ -18,7 +18,8 @@ type  Props = {
 const ConversationsPage = ({ params }: Props) => {
   const { conversationId } = params;
   const conversation = useQuery(api.conversation.get,
-     conversationId ? {
+    conversationId ?
+      {
     id: conversationId} : "skip"
 );
   return (
@@ -37,8 +38,8 @@ const ConversationsPage = ({ params }: Props) => {
     : (
       <ConversationContainer>
         <Header 
-          imageUrl={conversation.isGroup ? undefined : conversation.otherMember.imageUrl }
-          name={(conversation.isGroup ? conversation.name : conversation.otherMember.username) || ""}
+          imageUrl={conversation.isGroup ? undefined :  conversation.otherMember?.imageUrl }
+          name={(conversation.isGroup ? conversation.name : conversation.otherMember?.username) || ""}
           />
         <Body />
         <ChatInput />
