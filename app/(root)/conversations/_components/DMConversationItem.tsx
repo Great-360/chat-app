@@ -8,7 +8,7 @@ import Link from "next/link";
 
 
 
-type Props = {
+type PageProps = {
     id: Id<"conversations">;
     imageUrl: string;
     username: string;
@@ -16,7 +16,7 @@ type Props = {
     lastMessageContent: string | undefined;
     unSeenCount: number;
 }
-const DMConversationItem = ({ id,imageUrl,username, lastMessageSender, lastMessageContent,unSeenCount } : Props) => {
+const DMConversationItem = ({ id,imageUrl,username, lastMessageSender, lastMessageContent,unSeenCount } : PageProps) => {
     
   return (
     <Link href={`/conversations/${id}`} 

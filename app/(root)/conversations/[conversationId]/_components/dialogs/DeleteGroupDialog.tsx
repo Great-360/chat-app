@@ -7,7 +7,7 @@ import { ConvexError } from "convex/values";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 
-type Props = {
+type PageProps = {
     conversationId: Id<"conversations">;
     open: boolean;
     setOpen: Dispatch<SetStateAction<boolean>>
@@ -15,7 +15,7 @@ type Props = {
 
 const DeleteGroupDialog = ({
     conversationId, open, setOpen
-}: Props) => {
+}: PageProps) => {
     const { mutate: deleteGroup, pending} = useMutationState(api.conversations.deleteGroup);
     const handleDeleteGroup =  async () => {
       deleteGroup({conversationId}).then(() => {

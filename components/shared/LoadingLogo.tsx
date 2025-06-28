@@ -1,10 +1,10 @@
 import Image from "next/image";
 
 
-type Props = {
+type PageProps = {
   size: number;
 }
-function LoadingLogo({ size = 100}: Props) {
+function LoadingLogo({ size = 100}: PageProps) {
 
   return (
     <div className="h-full w-full flex justify-center items-center ">

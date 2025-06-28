@@ -8,13 +8,13 @@ import Header from './[conversationId]/_components/Header'
 import Body from './[conversationId]/_components/body/Body'
 import ChatInput from './[conversationId]/_components/input/ChatInput'
 
-type  Props = {
+type  PageProps = {
   params:{
     conversationId: Id<"conversations"> ;
   }
 }
 
-const ConversationsPage = ({ params }: Props) => {
+const ConversationsPage = ({ params }: PageProps) => {
   const { conversationId } = params;
   const conversation = useQuery(api.conversation.get,
     conversationId ?

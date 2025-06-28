@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import {format} from "date-fns"
 import React from "react";
 
-type Props = {
+type PageProps = {
     fromCurrentUser: boolean,
     senderImage: string,
     senderName: string,
@@ -16,7 +16,7 @@ type Props = {
 
 const Message = ({
     fromCurrentUser,senderImage,senderName,lastByUser,content,createdAt,seen,type
-}:Props) => {
+}:PageProps) => {
   const formatTime = (timeStamp: number) => {
     return format(timeStamp, "HH:mm");
   }

@@ -1,5 +1,5 @@
 "use client"
-  import { use } from "react";
+ // import { use } from "react";
 import ConversationContainer from '@/components/shared/conversation/ConversationContainer'
 import { useQuery } from 'convex/react'
 import { api } from '@/convex/_generated/api'
@@ -13,17 +13,17 @@ import RemoveFriendDialog from './_components/dialogs/RemoveFriendDialog'
 import DeleteGroupDialog from './_components/dialogs/DeleteGroupDialog'
 import LeaveGroupDialog from "./_components/dialogs/LeaveGroupDialog";
 
-/*type  Props = {
+type  PageProps = {
   params:{
     type: string;
   senderId: Id<"users">;
   conversationId: Id<"conversations">; 
   content: string[];
   }
-}*/
+}
 
-const ConversationPage =  ({ params }: { params: Promise<{conversationId: Id<"conversations">}>}) => {
-    const { conversationId } = use(params);
+const ConversationPage =  ({ params }:PageProps) => {
+    const { conversationId } = (params);
   const conversation = useQuery(api.conversation.get,{id: conversationId});
 
   const [removeFriendDialogueOpen, setRemoveFriendDialogueOpen] = useState(false);

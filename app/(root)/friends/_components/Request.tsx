@@ -9,7 +9,7 @@ import { ConvexError } from "convex/values";
 import { Check, User, X } from "lucide-react";
 import { toast } from "sonner";
 
-type Props = {
+type PageProps = {
     id: Id<"requests">;
     imageUrl: string;
     username: string;
@@ -17,7 +17,7 @@ type Props = {
     //sender: string;
 
 }
-const Request = ({id, imageUrl, username, email}: Props) => {
+const Request = ({id, imageUrl, username, email}: PageProps) => {
   const { mutate: denyRequest, pending: denyPending }= useMutationState(api.request.deny);
    const { mutate: acceptRequest, pending: acceptPending }= useMutationState(api.request.accept)
   return (

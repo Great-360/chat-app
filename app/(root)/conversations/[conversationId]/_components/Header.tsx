@@ -7,7 +7,7 @@ import { CircleArrowLeft, Settings } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
 
-type Props = {
+type PageProps = {
     imageUrl: string | undefined;
     name: string;
     options?: {
@@ -17,7 +17,7 @@ type Props = {
     }[]
 }
 
-const Header = ({ imageUrl, name, options }: Props) => {
+const Header = ({ imageUrl, name, options }: PageProps) => {
   return (
     <div>
       <Card className='w-full flex flex-row rounded-lg  p-2 justify-between'>

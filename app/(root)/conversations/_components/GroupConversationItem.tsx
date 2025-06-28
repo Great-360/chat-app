@@ -8,14 +8,14 @@ import Link from "next/link";
 
 
 
-type Props = {
+type PageProps = {
     id: Id<"conversations">;
     name: string;
     lastMessageSender?: string;
     lastMessageContent: string | undefined;
     unSeenCount: number;
 }
-const GroupConversationItem = ({ id,name, lastMessageSender, lastMessageContent,unSeenCount } : Props) => {
+const GroupConversationItem = ({ id,name, lastMessageSender, lastMessageContent,unSeenCount } : PageProps) => {
     
   return (
     <Link href={`/conversations/${id}`} 

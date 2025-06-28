@@ -1,11 +1,11 @@
 import React from 'react'
 import DesktopNav from './nav/DesktopNav'
 import MobileNav from './nav/MobileNav'
-type Props = React.PropsWithChildren<{
+type PageProps = React.PropsWithChildren<{
     children: React.ReactNode
 }>
 
-const SidebarWrapper = ({children}: Props) => {
+const SidebarWrapper = ({children}: PageProps) => {
   return (
     <div className='h-full w-full p-4 flex flex-col lg:flex-row gap-4'>
         <MobileNav />

@@ -4,12 +4,12 @@ import { useConversation } from '@/hooks/useConversation';
 import { cn } from '@/lib/utils';
 import React from 'react'
 
-type Props = React.PropsWithChildren<{
+type PageProps = React.PropsWithChildren<{
     title: string;
     Action?: React.ReactNode;
 }>
 
-const ItemList = ({ children, title, Action}: Props) => {
+const ItemList = ({ children, title, Action}: PageProps) => {
     const {isActive} = useConversation();
   return (
     <Card className={cn(

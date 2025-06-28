@@ -7,7 +7,7 @@ import { ConvexError } from "convex/values";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 
-type Props = {
+type PageProps = {
     conversationId: Id<"conversations">;
     open: boolean;
     setOpen: Dispatch<SetStateAction<boolean>>
@@ -15,7 +15,7 @@ type Props = {
 
 const LeaveGroupDialog = ({
     conversationId, open, setOpen
-}: Props) => {
+}: PageProps) => {
     const { mutate: leaveGroup, pending} = useMutationState(api.conversations.leaveGroup);
     const handleleaveGroup =  async () => {
       leaveGroup({conversationId}).then(() => {
