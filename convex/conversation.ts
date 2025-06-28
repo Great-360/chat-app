@@ -4,7 +4,7 @@ import { getUserByClerkId } from "./_utils";
 
 export const get = query({
     args: {
-        id: v.id("conversations")
+        id:  v.id("conversations")
     },
     handler: async (ctx, args) => {
         if(!args.id) {

@@ -35,6 +35,7 @@ const ConversationLayout = ({ children}: Props) => {
                   name={conversations.conversation.name || ""}
                   lastMessageContent={conversations.lastMessage?.content}
                   lastMessageSender={conversations.lastMessage?.sender}
+                  unSeenCount={conversations.unSeenCount}
                 />
               )
               : (
@@ -44,6 +45,7 @@ const ConversationLayout = ({ children}: Props) => {
                   imageUrl={conversations.otherMember?.imageUrl || ""}
                   lastMessageContent={conversations.lastMessage?.content}
                   lastMessageSender={conversations.lastMessage?.sender}
+                  unSeenCount={conversations.unSeenCount}
                 />
               )
             })

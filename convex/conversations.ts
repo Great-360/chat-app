@@ -38,19 +38,35 @@ export const get = query({args: {},
         .withIndex("by_conversationId", q => q.eq("conversationId", conversation?._id)).collect();
 
     const lastMessage = await getLastMessageDetails({
-        ctx, id: conversation.lastMessageId
-    })
+        ctx, 
+        id: conversation.lastMessageId,
+
+    });
+    const lastSeenMessage = conversationMemberShips[index].lastSeenMessage 
+     ? await  ctx.db.get(conversationMemberShips[index].lastSeenMessage)
+     : null
+     const lastSeenMessageTime = lastMessage && lastSeenMessage && typeof lastSeenMessage._creationTime === "number"
+       ? lastSeenMessage._creationTime
+       : -1;
+
+       const unSeenMessages = await ctx.db.query("messages")
+       .withIndex("by_conversationId", q => q.eq("conversationId", conversation._id))
+       .filter((q) => q.gt(q.field("_creationTime"), lastSeenMessageTime))
+       .filter((q) => q.neq(q.field("senderId"), currentUser._id))
+       .collect();
 
      if (conversation.isGroup) {
-        return {conversation, lastMessage}
+        return {conversation, lastMessage, unSeenCount: unSeenMessages.length}
      } else{
         const otherMembership = allConversationMemberships.filter(
             (membership) => membership.memberId !== currentUser._id
         )[0]
         const otherMember = await ctx.db.get(otherMembership.memberId)
         
+        const unSeenCount = unSeenMessages.length;
         return {
-            conversation,otherMember, lastMessage
+            conversation,otherMember, lastMessage, unSeenCount
+            
         }
      }
 
@@ -174,6 +190,45 @@ export const leaveGroup= mutation({
            throw new ConvexError("You are not a member of this group")
         }
        await ctx.db.delete(memberships._id)
+    },
+})
+export const markRead= mutation({
+    args:{
+        conversationId: v.id("conversations"),
+        messageId: v.id("messages")
+    },
+    handler: async (ctx, args) => {
+        if(!args.conversationId) {
+            throw new ConvexError("Conversation Id is required")
+        }
+        const identity =  await ctx.auth.getUserIdentity();
+        if(!identity) {
+            throw new ConvexError("Unauthorized");
+        }
+        if(args.conversationId === identity.email) {
+            throw new ConvexError("You cannot send a request to yourself")
+        };
+                
+        const currentUser = await getUserByClerkId({
+            ctx, clerkId: identity.subject
+        });
+        if (!currentUser) {
+            throw new ConvexError("User not found");
+        } 
+
+        const memberships = await ctx.db.query("conversationMembers").withIndex("by_memberId_conversationId",
+            q => q.eq("conversationId", args.conversationId).eq("memberId", currentUser._id)
+        ).unique()
+
+        if(!memberships) {
+           throw new ConvexError("You are not a member of this group")
+        }
+       const lastMessage = await ctx.db.get(args.messageId)
+
+       await ctx.db.patch(memberships._id, {
+        lastSeenMessage: lastMessage ?
+        lastMessage._id: undefined,
+       })
     },
 })
 

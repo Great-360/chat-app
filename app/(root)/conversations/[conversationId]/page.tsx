@@ -81,7 +81,10 @@ const ConversationPage =  ({ params }: { params: Promise<{conversationId: Id<"co
              },
           ]}
           />
-        <Body />
+        <Body members={conversation.isGroup ?
+          conversation.otherMembers ? conversation.otherMembers : []
+          : conversation.otherMember ?[ conversation.otherMember] :  []     
+           }/>
         <ChatInput />
       </ConversationContainer>
     )

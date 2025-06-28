@@ -2,6 +2,7 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Id } from "@/convex/_generated/dataModel"
+import { Badge } from "@/components/ui/badge";
 
 import Link from "next/link";
 
@@ -12,14 +13,15 @@ type Props = {
     name: string;
     lastMessageSender?: string;
     lastMessageContent: string | undefined;
+    unSeenCount: number;
 }
-const GroupConversationItem = ({ id,name, lastMessageSender, lastMessageContent } : Props) => {
+const GroupConversationItem = ({ id,name, lastMessageSender, lastMessageContent,unSeenCount } : Props) => {
     
   return (
     <Link href={`/conversations/${id}`} 
      className="w-full"
     >
-    <Card className="p-2 flex flex-row items-center gap-4 truncate">
+    <Card className="p-2 flex flex-row items-center justify-between">
         <div className="flex flex-row items-center gap-4 truncate">
            <Avatar>
             <AvatarFallback>
@@ -43,6 +45,7 @@ const GroupConversationItem = ({ id,name, lastMessageSender, lastMessageContent 
                </p>}
            </div>
         </div>
+        {unSeenCount ? <Badge>{unSeenCount}</Badge> : null}
     </Card>
     </Link>
   )
