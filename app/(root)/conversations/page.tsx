@@ -1,5 +1,4 @@
 "use client"
-import ConversationFallback from '@/components/shared/conversation/ConversationFallback'
 import ConversationContainer from '@/components/shared/conversation/ConversationContainer'
 import { useQuery } from 'convex/react'
 import { api } from '@/convex/_generated/api'
@@ -41,7 +40,11 @@ const ConversationsPage = ({ params }: Props) => {
           imageUrl={conversation.isGroup ? undefined :  conversation.otherMember?.imageUrl }
           name={(conversation.isGroup ? conversation.name : conversation.otherMember?.username) || ""}
           />
-        <Body />
+         <Body members={conversation.isGroup ?
+           conversation.otherMembers ? conversation.otherMembers : []
+           : conversation.otherMember ?[ conversation.otherMember] :  []     
+            }
+          />
         <ChatInput />
       </ConversationContainer>
     )

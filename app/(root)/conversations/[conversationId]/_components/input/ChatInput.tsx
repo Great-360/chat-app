@@ -4,9 +4,8 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { api } from '@/convex/_generated/api'
 import { useConversation } from '@/hooks/useConversation'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from 'convex/react'
 import { ConvexError } from 'convex/values'
-import React, { useRef } from 'react'
+//import React, { useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -24,7 +23,7 @@ const chatMessageSchema = z.object({
 })
 
 const ChatInput = () => {
-  const textareaRef = useRef<HTMLTextAreaElement | null> (null)
+  //const textareaRef = useRef<HTMLTextAreaElement | null> (null)
   const { conversationId } = useConversation();
   const {mutate: createMessage, pending} = useMutationState(api.message.create);
 
@@ -44,7 +43,7 @@ const handleSubmit = async (values:
   content: [values.content]
  }).then(() => {
   form.reset();
- }).catch((error: any) => {
+ }).catch((error: unknown) => {
   toast.error(error instanceof ConvexError 
     ? error.data
     : "Unexpected error occured"
@@ -52,9 +51,9 @@ const handleSubmit = async (values:
  })
 }
 
-const handleInputChange = (event: any) =>{
+const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
  const { value, selectionStart } = event.target;
- if( selectionStart !== null) {
+ if (selectionStart !== null) {
   form.setValue("content", value)
  }
 }
@@ -78,7 +77,6 @@ const handleInputChange = (event: any) =>{
                 }}
                  {...field}
                  onChange={handleInputChange}
-                 onClick={handleInputChange}
                  placeholder='Type a message ....'
                  className='mini-h-full w-full resize-none border-0 outline-0 bg-card
                  text-card-foreground placeholder:text-muted-foreground p-1.5'

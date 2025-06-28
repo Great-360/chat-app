@@ -43,7 +43,7 @@ const CreateGroupDialog = () => {
     const unselectedFriends = useMemo(() => {
 
         return friends ? friends.filter(friend => !members.includes(friend._id)) : []
-    }, [members.length, friends?.length])
+    }, [friends, members])
 
     const handlesubmit = async (values: z.infer<typeof createGroupFormSchema>) => {
         await createGroup({ name: values.name, members: values.members}).then(() => {

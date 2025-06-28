@@ -13,14 +13,14 @@ import RemoveFriendDialog from './_components/dialogs/RemoveFriendDialog'
 import DeleteGroupDialog from './_components/dialogs/DeleteGroupDialog'
 import LeaveGroupDialog from "./_components/dialogs/LeaveGroupDialog";
 
-type  Props = {
+/*type  Props = {
   params:{
     type: string;
   senderId: Id<"users">;
   conversationId: Id<"conversations">; 
   content: string[];
   }
-}
+}*/
 
 const ConversationPage =  ({ params }: { params: Promise<{conversationId: Id<"conversations">}>}) => {
     const { conversationId } = use(params);

@@ -9,11 +9,12 @@ import { useMutationState } from "@/hooks/useMutationState";
 import { useEffect } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
+
 type Props = {
   members: {
     lastSeenMessageId?: Id<"messages">;
     username?: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }[]
 }
 
@@ -33,7 +34,7 @@ const Body = ({ members }: Props) => {
         messageId: messages[0].message._id,
       });
     }
-  }, [messages?.length , conversationId, markRead]);
+  }, [messages, conversationId, markRead]);
 
   const formatSeenBy = (names: string[]) => {
      switch(names.length) {
